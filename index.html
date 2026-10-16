@@ -19,36 +19,18 @@
     --red-bg: #fee2e2;
     --gray: #9ca3af;
   }
-
   * { box-sizing: border-box; }
-
   body {
     margin: 0;
-    padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.5;
     min-height: 100vh;
   }
-
-  .container {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 24px 16px 60px;
-  }
-
-  h1 {
-    font-size: 24px;
-    margin: 0 0 8px;
-  }
-
-  .subtitle {
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 24px;
-  }
-
+  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+  h1 { font-size: 24px; margin: 0 0 8px; }
+  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -56,17 +38,9 @@
     padding: 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
-
   .hidden { display: none !important; }
-
-  /* ---------- Стартовый экран ---------- */
   .start-screen { text-align: center; }
-
-  .start-screen .info {
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
-
+  .start-screen .info { color: var(--muted); margin-bottom: 20px; }
   .btn {
     display: inline-block;
     padding: 12px 22px;
@@ -79,18 +53,15 @@
     background: var(--accent);
     color: #fff;
   }
-
   .btn:hover { background: var(--accent-hover); }
   .btn:active { transform: translateY(1px); }
   .btn:disabled { background: var(--gray); cursor: not-allowed; }
-
   .btn-secondary {
     background: transparent;
     color: var(--accent);
     border: 1px solid var(--accent);
   }
   .btn-secondary:hover { background: #eff6ff; }
-
   .btn-danger {
     background: transparent;
     color: var(--red);
@@ -98,7 +69,6 @@
   }
   .btn-danger:hover { background: #fef2f2; }
 
-  /* ---------- Экран вопроса ---------- */
   .progress {
     display: flex;
     justify-content: space-between;
@@ -107,7 +77,6 @@
     color: var(--muted);
     margin-bottom: 12px;
   }
-
   .progress-bar {
     height: 6px;
     background: var(--border);
@@ -115,29 +84,15 @@
     overflow: hidden;
     margin-bottom: 20px;
   }
-
   .progress-bar-fill {
     height: 100%;
     background: var(--accent);
     width: 0;
     transition: width 0.25s ease;
   }
-
-  .question-text {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
-
-  .question-hint {
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    font-style: italic;
-  }
-
+  .question-text { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+  .question-hint { font-size: 13px; color: var(--muted); margin-bottom: 16px; font-style: italic; }
   .options { list-style: none; padding: 0; margin: 0 0 20px; }
-
   .option {
     display: flex;
     align-items: flex-start;
@@ -150,38 +105,20 @@
     transition: background 0.1s ease, border-color 0.1s ease;
     user-select: none;
   }
-
   .option:hover { background: #f9fafb; }
-
-  .option input {
-    margin-top: 3px;
-    flex-shrink: 0;
-    cursor: pointer;
-  }
-
+  .option input { margin-top: 3px; flex-shrink: 0; cursor: pointer; }
   .option.checked { border-color: var(--accent); background: #eff6ff; }
-
-  .option.correct {
-    background: var(--green-bg);
-    border-color: var(--green);
-  }
-
-  .option.incorrect {
-    background: var(--red-bg);
-    border-color: var(--red);
-  }
-
+  .option.correct { background: var(--green-bg); border-color: var(--green); }
+  .option.incorrect { background: var(--red-bg); border-color: var(--red); }
   .option.missed {
     background: var(--green-bg);
     border-color: var(--green);
     border-style: dashed;
   }
-
   .option.locked { cursor: default; }
   .option.locked:hover { background: inherit; }
 
   .text-input-wrap { margin-bottom: 20px; }
-
   .text-input {
     width: 100%;
     padding: 12px 14px;
@@ -190,28 +127,14 @@
     font-size: 16px;
     font-family: inherit;
   }
-
   .text-input:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
   }
-
-  .text-input.correct {
-    border-color: var(--green);
-    background: var(--green-bg);
-  }
-
-  .text-input.incorrect {
-    border-color: var(--red);
-    background: var(--red-bg);
-  }
-
-  .answer-feedback {
-    font-size: 14px;
-    margin-top: 8px;
-  }
-
+  .text-input.correct { border-color: var(--green); background: var(--green-bg); }
+  .text-input.incorrect { border-color: var(--red); background: var(--red-bg); }
+  .answer-feedback { font-size: 14px; margin-top: 8px; }
   .answer-feedback.correct { color: var(--green); }
   .answer-feedback.incorrect { color: var(--red); }
 
@@ -221,22 +144,9 @@
     gap: 10px;
     flex-wrap: wrap;
   }
-
-  /* ---------- Итоговый экран ---------- */
   .result-screen { text-align: center; }
-
-  .result-score {
-    font-size: 48px;
-    font-weight: 700;
-    margin: 12px 0 4px;
-  }
-
-  .result-percent {
-    font-size: 18px;
-    color: var(--muted);
-    margin-bottom: 8px;
-  }
-
+  .result-score { font-size: 48px; font-weight: 700; margin: 12px 0 4px; }
+  .result-percent { font-size: 18px; color: var(--muted); margin-bottom: 8px; }
   .result-grade {
     display: inline-block;
     font-size: 20px;
@@ -245,15 +155,12 @@
     border-radius: 8px;
     margin-bottom: 24px;
   }
-
   .grade-5 { background: var(--green-bg); color: var(--green); }
   .grade-4 { background: #dbeafe; color: #1d4ed8; }
   .grade-3 { background: #fef3c7; color: #b45309; }
   .grade-2 { background: var(--red-bg); color: var(--red); }
 
-  /* ---------- История ---------- */
   .history { margin-top: 32px; }
-
   .history h2 {
     font-size: 16px;
     margin: 0 0 12px;
@@ -262,20 +169,12 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-
-  .history-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-  }
-
-  .history-table th,
-  .history-table td {
+  .history-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .history-table th, .history-table td {
     text-align: left;
     padding: 8px 10px;
     border-bottom: 1px solid var(--border);
   }
-
   .history-table th {
     color: var(--muted);
     font-weight: 500;
@@ -283,12 +182,7 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
-
-  .history-empty {
-    color: var(--muted);
-    font-size: 14px;
-    font-style: italic;
-  }
+  .history-empty { color: var(--muted); font-size: 14px; font-style: italic; }
 
   @media (max-width: 480px) {
     .container { padding: 16px 10px 40px; }
@@ -301,7 +195,6 @@
 <body>
 <div class="container">
 
-  <!-- ================= СТАРТОВЫЙ ЭКРАН ================= -->
   <div id="startScreen" class="card start-screen">
     <h1>Тест по наследственному праву</h1>
     <p class="subtitle">70 вопросов · один вопрос на экране · случайный порядок</p>
@@ -312,26 +205,21 @@
     <button id="startBtn" class="btn">Начать тест</button>
   </div>
 
-  <!-- ================= ЭКРАН ВОПРОСА ================= -->
   <div id="quizScreen" class="card hidden">
     <div class="progress">
       <span id="progressText">Вопрос 1 из 70</span>
       <span id="progressScore">Верно: 0</span>
     </div>
     <div class="progress-bar"><div class="progress-bar-fill" id="progressBarFill"></div></div>
-
     <div class="question-text" id="questionText"></div>
     <div class="question-hint" id="questionHint"></div>
-
     <div id="optionsWrap"></div>
-
     <div class="actions">
       <button id="checkBtn" class="btn">Проверить</button>
       <button id="nextBtn" class="btn hidden">Следующий вопрос</button>
     </div>
   </div>
 
-  <!-- ================= ИТОГОВЫЙ ЭКРАН ================= -->
   <div id="resultScreen" class="card result-screen hidden">
     <h1>Тест завершён</h1>
     <div class="result-score" id="resultScore">0 / 70</div>
@@ -342,7 +230,6 @@
     </div>
   </div>
 
-  <!-- ================= ИСТОРИЯ ================= -->
   <div class="history">
     <h2>История попыток</h2>
     <div id="historyWrap"></div>
@@ -356,11 +243,7 @@
 <script>
 /* =========================================================
    ДАННЫЕ ТЕСТА
-   type: "single"  — один правильный ответ (радиокнопки)
-         "multiple" — несколько правильных (чекбоксы)
-         "text"     — ввод текста
    ========================================================= */
-
 const QUESTIONS = [
   { type: "multiple", question: "Наследник вправе отказаться от наследства", answers: [
     "в пользу других лиц из числа наследников по завещанию",
@@ -601,21 +484,18 @@ const QUESTIONS = [
 ];
 
 /* =========================================================
-   СОСТОЯНИЕ ТЕСТА
+   СОСТОЯНИЕ
    ========================================================= */
-
 const state = {
-  order: [],          // порядок вопросов (индексы в QUESTIONS)
-  current: 0,         // текущий индекс в order
-  score: 0,           // количество правильных
-  checked: false,     // проверен ли текущий вопрос
-  userAnswers: []     // ответы пользователя для текущей попытки
+  order: [],
+  current: 0,
+  score: 0,
+  checked: false
 };
 
 /* =========================================================
-   ЭЛЕМЕНТЫ DOM
+   DOM
    ========================================================= */
-
 const startScreen   = document.getElementById("startScreen");
 const quizScreen    = document.getElementById("quizScreen");
 const resultScreen  = document.getElementById("resultScreen");
@@ -636,10 +516,8 @@ const historyWrap   = document.getElementById("historyWrap");
 const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
 /* =========================================================
-   ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+   УТИЛИТЫ
    ========================================================= */
-
-// Перемешивание массива (Fisher–Yates)
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -649,25 +527,59 @@ function shuffle(arr) {
   return a;
 }
 
-// Нормализация текстового ответа для сравнения
 function normalize(str) {
   return String(str)
     .toLowerCase()
     .replace(/ё/g, "е")
-    .replace(/[.,;:!?]+$/g, "")   // убрать знаки в конце
-    .replace(/^[\s"'«»]+|[\s"'«»]+$/g, "") // убрать кавычки/пробелы по краям
+    .replace(/[.,;:!?]+$/g, "")
+    .replace(/^[\s"'«»]+|[\s"'«»]+$/g, "")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-// Форматирование даты
 function formatDate(ts) {
   const d = new Date(ts);
   const pad = n => String(n).padStart(2, "0");
   return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-// Оценка по проценту
 function gradeFromPercent(p) {
   if (p >= 90) return { grade: 5, cls: "grade-5" };
-  if (p >= 75) return { grade: 4, cls: "grade-
+  if (p >= 75) return { grade: 4, cls: "grade-4" };
+  if (p >= 60) return { grade: 3, cls: "grade-3" };
+  return { grade: 2, cls: "grade-2" };
+}
+
+/* =========================================================
+   ЭКРАНЫ
+   ========================================================= */
+function showScreen(name) {
+  startScreen.classList.toggle("hidden", name !== "start");
+  quizScreen.classList.toggle("hidden", name !== "quiz");
+  resultScreen.classList.toggle("hidden", name !== "result");
+}
+
+/* =========================================================
+   СТАРТ ТЕСТА
+   ========================================================= */
+function startQuiz() {
+  state.order = shuffle(QUESTIONS.map((_, i) => i));
+  state.current = 0;
+  state.score = 0;
+  state.checked = false;
+  showScreen("quiz");
+  renderQuestion();
+}
+
+/* =========================================================
+   ОТРИСОВКА ВОПРОСА
+   ========================================================= */
+function renderQuestion() {
+  state.checked = false;
+  const qIndex = state.order[state.current];
+  const q = QUESTIONS[qIndex];
+  const total = state.order.length;
+
+  progressText.textContent = `Вопрос ${state.current + 1} из ${total}`;
+  progressScore.textContent = `Верно: ${state.score}`;
+  progressBarFill.style.width = `${((state.current) / total) * 100}%`;
