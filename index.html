@@ -1,145 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Тест по наследственному праву</title>
 <style>
-  :root {
-    --bg: #f4f6f9; --card: #fff; --text: #1f2937; --muted: #6b7280;
-    --border: #e5e7eb; --accent: #2563eb; --accent-hover: #1d4ed8;
-    --green: #16a34a; --green-bg: #dcfce7; --red: #dc2626; --red-bg: #fee2e2;
-    --gray: #9ca3af;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--bg); color: var(--text); line-height: 1.5; min-height: 100vh;
-  }
-  .container { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
-  h1 { font-size: 24px; margin: 0 0 8px; }
-  .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
-  .card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  }
-  .hidden { display: none !important; }
-  .start-screen { text-align: center; }
-  .start-screen .info { color: var(--muted); margin-bottom: 20px; }
-  .btn {
-    display: inline-block; padding: 12px 22px; border-radius: 8px; border: none;
-    font-size: 15px; font-weight: 600; cursor: pointer;
-    transition: background 0.15s ease; background: var(--accent); color: #fff;
-  }
-  .btn:hover { background: var(--accent-hover); }
-  .btn:disabled { background: var(--gray); cursor: not-allowed; }
-  .btn-danger { background: transparent; color: var(--red); border: 1px solid var(--red); }
-  .btn-danger:hover { background: #fef2f2; }
-  .progress { display: flex; justify-content: space-between; font-size: 13px; color: var(--muted); margin-bottom: 12px; }
-  .progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 20px; }
-  .progress-bar-fill { height: 100%; background: var(--accent); width: 0; transition: width 0.25s ease; }
-  .question-text { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
-  .question-hint { font-size: 13px; color: var(--muted); margin-bottom: 16px; font-style: italic; }
-  .option {
-    display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
-    border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px;
-    cursor: pointer; transition: background 0.1s ease, border-color 0.1s ease; user-select: none;
-  }
-  .option:hover { background: #f9fafb; }
-  .option input { margin-top: 3px; flex-shrink: 0; cursor: pointer; }
-  .option.checked { border-color: var(--accent); background: #eff6ff; }
-  .option.correct { background: var(--green-bg); border-color: var(--green); }
-  .option.incorrect { background: var(--red-bg); border-color: var(--red); }
-  .option.missed { background: var(--green-bg); border-color: var(--green); border-style: dashed; }
-  .option.locked { cursor: default; }
-  .option.locked:hover { background: inherit; }
-  .text-input-wrap { margin-bottom: 20px; }
-  .text-input {
-    width: 100%; padding: 12px 14px; border: 1px solid var(--border);
-    border-radius: 8px; font-size: 16px; font-family: inherit;
-  }
-  .text-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.15); }
-  .text-input.correct { border-color: var(--green); background: var(--green-bg); }
-  .text-input.incorrect { border-color: var(--red); background: var(--red-bg); }
-  .answer-feedback { font-size: 14px; margin-top: 8px; }
-  .answer-feedback.correct { color: var(--green); }
-  .answer-feedback.incorrect { color: var(--red); }
-  .actions { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
-  .result-screen { text-align: center; }
-  .result-score { font-size: 48px; font-weight: 700; margin: 12px 0 4px; }
-  .result-percent { font-size: 18px; color: var(--muted); margin-bottom: 8px; }
-  .result-grade { display: inline-block; font-size: 20px; font-weight: 700; padding: 8px 20px; border-radius: 8px; margin-bottom: 24px; }
-  .grade-5 { background: var(--green-bg); color: var(--green); }
-  .grade-4 { background: #dbeafe; color: #1d4ed8; }
-  .grade-3 { background: #fef3c7; color: #b45309; }
-  .grade-2 { background: var(--red-bg); color: var(--red); }
-  .history { margin-top: 32px; }
-  .history h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  .history-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .history-table th, .history-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
-  .history-table th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .history-empty { color: var(--muted); font-size: 14px; font-style: italic; }
-  @media (max-width: 480px) {
-    .container { padding: 16px 10px 40px; }
-    .card { padding: 18px; }
-    .question-text { font-size: 16px; }
-  }
+:root{--bg:#f4f6fb;--card:#fff;--text:#172033;--muted:#667085;--line:#e4e8f0;--accent:#3559e0;--accent2:#2445bd;--green:#16834a;--greenbg:#e9f8ef;--red:#c8333d;--redbg:#fff0f0;--shadow:0 14px 40px #18264b12}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(150deg,#f4f6fb,#edf1fa);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;min-height:100vh}
+.wrap{width:min(900px,100%);margin:auto;padding:28px 18px 50px}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{width:42px;height:42px;border-radius:14px;background:var(--accent);color:white;display:grid;place-items:center;font-weight:800;font-size:20px}.brand small{display:block;color:var(--muted)}h1{font-size:clamp(25px,4vw,36px);line-height:1.15;margin:0 0 10px;letter-spacing:-.7px}h2{font-size:22px;line-height:1.3;margin:0 0 18px}.sub{color:var(--muted);margin:0 0 22px}.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:clamp(20px,4vw,34px);box-shadow:var(--shadow)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:12px 18px;font:inherit;font-weight:650;cursor:pointer;transition:.15s}.btn:focus-visible,input:focus-visible,.option:focus-within{outline:3px solid #9eb0ff;outline-offset:2px}.primary{background:var(--accent);color:white}.primary:hover{background:var(--accent2)}.secondary{background:#eef1f8;color:var(--text)}.danger{background:#fff0f0;color:#a91e28}.btn:disabled{opacity:.45;cursor:not-allowed}.drop{border:1.5px dashed #b9c4df;background:#f9faff;border-radius:16px;padding:22px;text-align:center;margin:20px 0}.drop.drag{background:#edf1ff;border-color:var(--accent)}input[type=file]{max-width:100%;margin-top:10px}.hint{font-size:13px;color:var(--muted)}.history{margin-top:24px}.history table{width:100%;border-collapse:collapse;font-size:14px}.history th,.history td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}.history th{color:var(--muted);font-weight:600}.empty{color:var(--muted);padding:14px 0}.progress{height:7px;background:#e9edf6;border-radius:99px;overflow:hidden;margin:0 0 20px}.progress span{display:block;height:100%;background:var(--accent);transition:width .2s}.qmeta{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}.question{font-size:clamp(19px,3vw,24px);font-weight:700;line-height:1.35;margin-bottom:22px}.options{display:grid;gap:10px}.option{display:flex;gap:12px;align-items:flex-start;padding:14px 15px;border:1px solid var(--line);border-radius:14px;cursor:pointer;background:white;transition:.15s}.option:hover{border-color:#aab7eb;background:#fafbff}.option input{margin-top:5px;accent-color:var(--accent);flex-shrink:0}.option.correct{border-color:var(--green);background:var(--greenbg)}.option.wrong{border-color:var(--red);background:var(--redbg)}.option.missed{border:2px solid var(--green);background:#f5fff8}.feedback{margin-top:16px;padding:13px 15px;border-radius:12px;background:#f4f6fb;color:#344054}.actions{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:24px}.score{font-size:52px;line-height:1.1;font-weight:800;letter-spacing:-2px}.grade{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:16px;background:#e9edff;color:var(--accent);font-size:26px;font-weight:800;margin-right:12px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}.stat{background:#f7f8fc;border:1px solid var(--line);border-radius:14px;padding:15px}.stat b{display:block;font-size:22px}.hidden{display:none!important}
+@media(max-width:560px){.wrap{padding:18px 12px 32px}.card{border-radius:17px}.stats{grid-template-columns:1fr}.history{overflow-x:auto}.history table{min-width:470px}.actions .btn{flex:1}.brand{margin-bottom:16px}}
 </style>
 </head>
 <body>
-<div class="container">
-
-  <div id="startScreen" class="card start-screen">
-    <h1>Тест по наследственному праву</h1>
-    <p class="subtitle">70 вопросов · один вопрос на экране · случайный порядок</p>
-    <p class="info">
-      При ответе на вопрос с несколькими правильными вариантами отметьте все верные.<br>
-      Некоторые вопросы предполагают ввод ответа текстом.
-    </p>
-    <button id="startBtn" class="btn" type="button">Начать тест</button>
-  </div>
-
-  <div id="quizScreen" class="card hidden">
-    <div class="progress">
-      <span id="progressText">Вопрос 1 из 70</span>
-      <span id="progressScore">Верно: 0</span>
-    </div>
-    <div class="progress-bar"><div class="progress-bar-fill" id="progressBarFill"></div></div>
-    <div class="question-text" id="questionText"></div>
-    <div class="question-hint" id="questionHint"></div>
-    <div id="optionsWrap"></div>
-    <div class="actions">
-      <button id="checkBtn" class="btn" type="button">Проверить</button>
-      <button id="nextBtn" class="btn hidden" type="button">Следующий вопрос</button>
-    </div>
-  </div>
-
-  <div id="resultScreen" class="card result-screen hidden">
-    <h1>Тест завершён</h1>
-    <div class="result-score" id="resultScore">0 / 70</div>
-    <div class="result-percent" id="resultPercent">0%</div>
-    <div class="result-grade" id="resultGrade"></div>
-    <div class="actions" style="justify-content: center;">
-      <button id="restartBtn" class="btn" type="button">Пройти заново</button>
-    </div>
-  </div>
-
-  <div class="history">
-    <h2>История попыток</h2>
-    <div id="historyWrap"></div>
-    <div style="margin-top: 12px;">
-      <button id="clearHistoryBtn" class="btn btn-danger" type="button">Очистить историю</button>
-    </div>
-  </div>
-
+<div class="wrap">
+  <div class="brand"><div class="logo">Н</div><div><strong>Учебный тренажёр</strong><small>Гражданское право · Наследование</small></div></div>
+  <main id="app"></main>
+  <p class="hint" style="text-align:center;margin-top:20px">Автономная страница · данные попыток хранятся только в этом браузере</p>
 </div>
-
 <script>
-/* =========================================================
-   ДАННЫЕ ТЕСТА
-   ========================================================= */
-var QUESTIONS = [
-  { type: "multiple", question: "Наследник вправе отказаться от наследства", answers: ["в пользу других лиц из числа наследников по завещанию", "в пользу других лиц из числа наследников по закону любой очереди"]},
+"use strict";
+// Банк вопросов извлечён из прикреплённого документа. Неверные варианты добавлены для тренировки.
+const BANK = [ { type: "multiple", question: "Наследник вправе отказаться от наследства", answers: ["в пользу других лиц из числа наследников по завещанию", "в пользу других лиц из числа наследников по закону любой очереди"]},
   { type: "single", question: "Наследниками 4 очереди являются", answers: ["родственники 3 степени родства"]},
   { type: "single", question: "Наследование между усыновлённым и его кровными родственниками", answers: ["не исключает наследования между усыновлённым и усыновителем"]},
   { type: "single", question: "Суд может освободить исполнителя завещания от его обязанностей", answers: ["по просьбе самого исполнителя завещания и по просьбе наследников при наличии обстоятельств, препятствующих исполнению гражданином этих обязанностей"]},
@@ -210,149 +91,87 @@ var QUESTIONS = [
   { type: "text", question: "Переход имущества умершего к другим лицам в порядке универсального правопреемства называется", answer: "наследование"},
   { type: "text", question: "Правопреемство при наследовании, когда имущество переходит в неизменном виде как единое целое, является", answer: "универсальным"}
 ];
-
-/* =========================================================
-   СОСТОЯНИЕ И DOM
-   ========================================================= */
-var state = { order: [], current: 0, score: 0, checked: false };
-
-var startScreen = document.getElementById("startScreen");
-var quizScreen = document.getElementById("quizScreen");
-var resultScreen = document.getElementById("resultScreen");
-var startBtn = document.getElementById("startBtn");
-var restartBtn = document.getElementById("restartBtn");
-var checkBtn = document.getElementById("checkBtn");
-var nextBtn = document.getElementById("nextBtn");
-var progressText = document.getElementById("progressText");
-var progressScore = document.getElementById("progressScore");
-var progressBarFill = document.getElementById("progressBarFill");
-var questionText = document.getElementById("questionText");
-var questionHint = document.getElementById("questionHint");
-var optionsWrap = document.getElementById("optionsWrap");
-var resultScore = document.getElementById("resultScore");
-var resultPercent = document.getElementById("resultPercent");
-var resultGrade = document.getElementById("resultGrade");
-var historyWrap = document.getElementById("historyWrap");
-var clearHistoryBtn = document.getElementById("clearHistoryBtn");
-
-/* =========================================================
-   УТИЛИТЫ
-   ========================================================= */
-function shuffle(arr) {
-  var a = arr.slice();
-  for (var i = a.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    var t = a[i]; a[i] = a[j]; a[j] = t;
-  }
-  return a;
+const HISTORY_KEY = "inheritanceQuizHistory_v1";
+const $ = s => document.querySelector(s);
+const app = $("#app");
+let questions = [], index = 0, answers = [], checked = false, score = 0, attemptBank = BANK;
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function history(){try{return JSON.parse(localStorage.getItem(HISTORY_KEY)||"[]")}catch{return []}}
+function saveHistory(item){const h=history();h.unshift(item);localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(0,10)))}
+function renderStart(){
+ const h=history();
+ app.innerHTML=`<section class="card"><h1>Тест по наследственному праву</h1><p class="sub">Проверьте знания по вопросам из предоставленного файла. В каждом вопросе может быть один или несколько правильных ответов.</p>
+ <div class="row"><div><strong><span id="bankCount">${BANK.length}</span> вопросов в банке</strong><div class="hint">Вопросы и варианты перемешиваются при каждой попытке.</div>
+ <label for="questionCount" style="display:block;margin-top:14px;font-weight:650">Сколько вопросов пройти?</label><select id="questionCount" style="margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:white;color:var(--text);font:inherit;max-width:100%"></select>
+ </div><button class="btn primary" id="start">Начать тест</button></div>
+ <div class="history"><div class="row"><h2 style="font-size:18px;margin:0">История попыток</h2><button class="btn secondary" id="clear" ${h.length?'':'disabled'}>Очистить историю</button></div>
+ ${h.length?`<table><thead><tr><th>Дата и время</th><th>Результат</th><th>Процент</th><th>Оценка</th></tr></thead><tbody>${h.map(x=>`<tr><td>${esc(x.date)}</td><td>${x.correct} / ${x.total}</td><td>${x.percent}%</td><td>${x.grade}</td></tr>`).join("")}</tbody></table>`:'<p class="empty">Пока нет завершённых попыток.</p>'}</div>
+ <div class="drop" id="drop"><strong>Есть другой файл с вопросами?</strong><div class="hint">Можно загрузить .txt с вопросами и ответами: вопрос отдельной строкой, правильные ответы — следующими строками, блоки разделены пустой строкой.</div><input type="file" id="file" accept=".txt,text/plain"><div id="filemsg" class="hint"></div></div>
+ <p class="hint">Оценка: 90–100% — 5; 75–89% — 4; 60–74% — 3; менее 60% — 2.</p></section>`;
+ populateQuestionCounts(BANK.length);
+ $("#start").onclick=()=>start(BANK, Number($("#questionCount").value));
+ $("#clear").onclick=()=>{if(confirm("Удалить историю всех попыток?")){localStorage.removeItem(HISTORY_KEY);renderStart()}};
+ const drop=$("#drop"), file=$("#file");
+ file.onchange=()=>loadText(file.files[0]);
+ drop.ondragover=e=>{e.preventDefault();drop.classList.add("drag")};drop.ondragleave=()=>drop.classList.remove("drag");
+ drop.ondrop=e=>{e.preventDefault();drop.classList.remove("drag");if(e.dataTransfer.files[0])loadText(e.dataTransfer.files[0])};
 }
-
-function normalize(str) {
-  return String(str).toLowerCase()
-    .replace(/ё/g, "е")
-    .replace(/[.,;:!?]+$/g, "")
-    .replace(/^[\s"'«»]+|[\s"'«»]+$/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+function populateQuestionCounts(total, preferred){
+ const select=$("#questionCount");
+ if(!select)return;
+ const counts=[10,15,20,25,30,35].filter(n=>n<total);
+ counts.push(total);
+ const unique=[...new Set(counts)];
+ select.innerHTML=unique.map(n=>`<option value="${n}">${n===total?`Все вопросы (${n})`:`${n} вопросов`}</option>`).join("");
+ const wanted=preferred && unique.includes(preferred)?preferred:(unique.includes(10)?10:total);
+ select.value=String(wanted);
+ $("#bankCount").textContent=total;
 }
-
-function formatDate(ts) {
-  var d = new Date(ts);
-  function pad(n) { return n < 10 ? "0" + n : "" + n; }
-  return pad(d.getDate()) + "." + pad(d.getMonth() + 1) + "." + d.getFullYear() + " " + pad(d.getHours()) + ":" + pad(d.getMinutes());
+function loadText(file){
+ if(!file)return;
+ if(!file.name.toLowerCase().endsWith(".txt")){$("#filemsg").textContent="Пожалуйста, выберите файл .txt.";return}
+ const reader=new FileReader();
+ reader.onload=()=>{const parsed=parseText(String(reader.result||""));if(!parsed.length){$("#filemsg").textContent="Не удалось найти вопросы. Проверьте формат файла.";return}attemptBank=parsed;populateQuestionCounts(parsed.length);$("#filemsg").textContent=`Загружено вопросов: ${parsed.length}. Выберите количество и нажмите «Начать тест».`;$("#start").onclick=()=>start(parsed, Number($("#questionCount").value))};
+ reader.onerror=()=>$("#filemsg").textContent="Не удалось прочитать файл.";
+ reader.readAsText(file,"UTF-8");
 }
-
-function gradeFromPercent(p) {
-  if (p >= 90) return { grade: 5, cls: "grade-5" };
-  if (p >= 75) return { grade: 4, cls: "grade-4" };
-  if (p >= 60) return { grade: 3, cls: "grade-3" };
-  return { grade: 2, cls: "grade-2" };
+function parseText(text){
+ const blocks=text.replace(/\r/g,"").split(/\n\s*\n/);const out=[];
+ for(const block of blocks){const lines=block.split("\n").map(s=>s.trim()).filter(Boolean);if(lines.length<2)continue;
+ let q=lines[0].replace(/^\d+[\.)]\s*/,"");let a=lines.slice(1).map(s=>s.replace(/^[-•]\s*/,"")).filter(Boolean);
+ if(q&&a.length){const wrong=["Только по решению суда при согласии всех наследников","Исключительно в пользу государства","Только после истечения трёх лет со дня открытия наследства"];out.push({q,a,wrong})}}
+ return out;
 }
-
-/* =========================================================
-   ЭКРАНЫ
-   ========================================================= */
-function showScreen(name) {
-  startScreen.classList.toggle("hidden", name !== "start");
-  quizScreen.classList.toggle("hidden", name !== "quiz");
-  resultScreen.classList.toggle("hidden", name !== "result");
+let attemptCount = BANK.length;
+function start(bank, requestedCount){
+ attemptBank=bank;
+ attemptCount=Math.max(1,Math.min(bank.length,Number(requestedCount)||bank.length));
+ const selectedQuestions=shuffle(bank).slice(0,attemptCount);
+ questions=selectedQuestions.map(q=>({...q,options:shuffle([...q.a.map(t=>({text:t,correct:true})),...q.wrong.slice(0,3).map(t=>({text:t,correct:false}))])}));
+ index=0;answers=[];checked=false;score=0;renderQuestion();
 }
-
-/* =========================================================
-   ЗАПУСК ТЕСТА
-   ========================================================= */
-function startQuiz() {
-  state.order = shuffle(QUESTIONS.map(function(_, i) { return i; }));
-  state.current = 0;
-  state.score = 0;
-  state.checked = false;
-  showScreen("quiz");
-  renderQuestion();
+function renderQuestion(){
+ const q=questions[index];answers[index]=answers[index]||[];
+ app.innerHTML=`<section class="card"><div class="progress"><span style="width:${(index/questions.length)*100}%"></span></div><div class="qmeta">Вопрос ${index+1} из ${questions.length}</div><div class="question">${esc(q.q)}</div>
+ <div class="hint" style="margin-bottom:12px">Выберите ${q.a.length>1?"все правильные ответы":"один правильный ответ"}.</div>
+ <div class="options">${q.options.map((o,i)=>{const chosen=answers[index].includes(i);let cls=checked?(o.correct?(chosen?"correct":"missed"):(chosen?"wrong":"")):"";return `<label class="option ${cls}"><input type="${q.a.length>1?'checkbox':'radio'}" name="answer" value="${i}" ${chosen?'checked':''} ${checked?'disabled':''}><span>${esc(o.text)}</span></label>`}).join("")}</div>
+ ${checked?`<div class="feedback">${isCorrect(q,answers[index])?"Верно! Все правильные варианты выбраны.":"Ответ не полностью верный. Зелёным отмечены правильные варианты, красным — выбранные неверные."}</div>`:""}
+ <div class="actions"><button class="btn secondary" id="exit">В меню</button><button class="btn primary" id="action">${checked?(index===questions.length-1?"Завершить тест":"Следующий вопрос"):"Проверить"}</button></div></section>`;
+ $("#exit").onclick=renderStart;
+ document.querySelectorAll('input[name="answer"]').forEach(inp=>inp.onchange=()=>{if(checked)return;const n=Number(inp.value);if(q.a.length>1){if(inp.checked&&!answers[index].includes(n))answers[index].push(n);if(!inp.checked)answers[index]=answers[index].filter(x=>x!==n)}else answers[index]=[n]});
+ $("#action").onclick=()=>{if(!checked){if(!answers[index].length){alert("Сначала выберите ответ.");return}checked=true;if(isCorrect(q,answers[index]))score++;renderQuestion()}else if(index<questions.length-1){index++;checked=false;renderQuestion()}else finish()};
 }
-
-/* =========================================================
-   ОТРИСОВКА ВОПРОСА
-   ========================================================= */
-function renderQuestion() {
-  state.checked = false;
-  var qIndex = state.order[state.current];
-  var q = QUESTIONS[qIndex];
-  var total = state.order.length;
-
-  progressText.textContent = "Вопрос " + (state.current + 1) + " из " + total;
-  progressScore.textContent = "Верно: " + state.score;
-  progressBarFill.style.width = ((state.current) / total * 100) + "%";
-
-  questionText.textContent = q.question;
-
-  if (q.type === "single") {
-    questionHint.textContent = "Выберите один вариант ответа";
-  } else if (q.type === "multiple") {
-    questionHint.textContent = "Выберите один или несколько вариантов ответа";
-  } else {
-    questionHint.textContent = "Введите ответ";
-  }
-
-  optionsWrap.innerHTML = "";
-
-  if (q.type === "text") {
-    var wrap = document.createElement("div");
-    wrap.className = "text-input-wrap";
-    var input = document.createElement("input");
-    input.type = "text";
-    input.className = "text-input";
-    input.id = "textAnswer";
-    input.placeholder = "Введите ваш ответ";
-    input.autocomplete = "off";
-    wrap.appendChild(input);
-    optionsWrap.appendChild(wrap);
-
-    var fb = document.createElement("div");
-    fb.className = "answer-feedback";
-    fb.id = "answerFeedback";
-    optionsWrap.appendChild(fb);
-
-    input.addEventListener("keydown", function(e) {
-      if (e.key === "Enter" && !state.checked) { checkAnswer(); }
-      else if (e.key === "Enter" && state.checked) { nextQuestion(); }
-    });
-
-  } else {
-    // Перемешиваем варианты, но запоминаем какие правильные по тексту
-    var correctSet = {};
-    q.answers.forEach(function(a) { correctSet[a] = true; });
-    var shuffled = shuffle(q.answers);
-
-    var inputType = q.type === "single" ? "radio" : "checkbox";
-    var groupName = "q_" + qIndex;
-
-    shuffled.forEach(function(answerText, idx) {
-      var label = document.createElement("label");
-      label.className = "option";
-      label.dataset.correct = correctSet[answerText] ? "1" : "0";
-      label.dataset.text = answerText;
-
-      var input = document.createElement("input");
-      input.type = inputType;
-      input.name = groupName;
-      input.value = answer
+function isCorrect(q,selected){const right=q.options.map((o,i)=>o.correct?i:-1).filter(i=>i>=0);return right.length===selected.length&&right.every(i=>selected.includes(i))}
+function finish(){
+ const total=questions.length, percent=Math.round(score/total*100), grade=percent>=90?5:percent>=75?4:percent>=60?3:2;
+ const date=new Date().toLocaleString("ru-RU");saveHistory({date,correct:score,total,percent,grade});
+ app.innerHTML=`<section class="card"><div class="qmeta">Тест завершён</div><h1>Ваш результат</h1><p class="sub">Попытка сохранена в истории этого браузера.</p><div class="row" style="justify-content:flex-start;gap:18px"><div class="score">${percent}%</div><div><div class="hint">Оценка</div><div style="display:flex;align-items:center;margin-top:4px"><span class="grade">${grade}</span><strong>${grade===5?"Отлично":grade===4?"Хорошо":grade===3?"Удовлетворительно":"Нужно повторить материал"}</strong></div></div></div>
+ <div class="stats"><div class="stat"><span class="hint">Правильных ответов</span><b>${score} из ${total}</b></div><div class="stat"><span class="hint">Процент</span><b>${percent}%</b></div><div class="stat"><span class="hint">Дата попытки</span><b style="font-size:16px">${esc(date)}</b></div></div>
+ <div class="actions"><button class="btn secondary" id="menu">На главную</button><button class="btn primary" id="again">Пройти ещё раз</button></div></section>`;
+ $("#menu").onclick=renderStart;$("#again").onclick=()=>start(attemptBank, attemptCount);
+}
+renderStart();
+</script>
+</body>
+</html>
